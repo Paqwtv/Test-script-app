@@ -13,7 +13,7 @@ Sequel database toolkit
 The database that you prefer to use.
 Default requires `sqlite3`
 
-##Configuration:
+## Configuration:
 
 You can choose which database you want to use in `db_adapter.rb`
 The default is `sqlite3` which stored in RAM memory, because it's fast.
