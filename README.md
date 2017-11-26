@@ -2,15 +2,15 @@
 Exchanging US dollar/Euro using ECB rates from:
 https://sdw.ecb.europa.eu/quickview.do?SERIES_KEY=120.EXR.D.USD.EUR.SP00.A
 
-# Require:
+## Require:
 
     Ruby 2.2 or newer
 
 Sequel database toolkit
 
-    `gem install sequel`
+    gem install sequel
 
-# Usage:
+## Usage:
 
 ```ruby
   Exchanger.exchange(110.23, Date.yesterday - 24, Date.today, '2017-01-25')
