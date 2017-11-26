@@ -11,11 +11,6 @@ class DbWriter
     @table    = DbAdapter.dataset
   end
 
-  def drop
-    @database.drop_table(:rate)
-    check_table
-  end
-
   def check_table
     table_exist? ? check_for_update : make_table
   end
