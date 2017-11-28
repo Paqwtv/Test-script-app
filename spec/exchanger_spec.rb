@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe 'Processing exchange requests' do
+
   context 'for amount' do
     let(:query) { Exchanger.exchange(100, '2017-01-25') }
     let(:bad_query) { Exchanger.exchange('100', '2017-01-25') }

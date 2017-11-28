@@ -31,7 +31,7 @@ class DbWriter
       parsed_data.map do |day, course|
         @table.insert(date: day, course: course) if course != '-'
       end
-    rescue Sequel::UniqueConstraintViolation
+    rescue Sequel::UniqueConstraintViolation # review
       puts 'Database successfully updated'
     end
     t2 = Time.now
