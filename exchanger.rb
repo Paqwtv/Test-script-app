@@ -14,7 +14,7 @@ class Exchanger
   def self.valid_params?(amount, *dates)
     if !amount.is_a?(Numeric)
       raise_num_error(amount)
-    elsif amount <= 0
+    elsif amount <= 0 # review
       raise_negative_num_error
     elsif dates.empty?
       raise_arg_error
@@ -37,12 +37,12 @@ class Exchanger
   def self.exchange_for_date(table, amount, date)
     day = PrepareDate.parse(date)
     rate = table.where(date: day).get(:course)
-    rate.nil? ? "Sorry, no data for #{day}" : (amount * rate.to_f).round(5)
+    rate.nil? ? "Sorry, no data for #{day}" : (amount * rate.to_f).round(5) # review
   end
 end
 
 # prepare incoming Date
-class PrepareDate
+class PrepareDate # review
   def self.parse(date)
     Date.parse(date.to_s)
   end
