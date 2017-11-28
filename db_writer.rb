@@ -4,24 +4,23 @@ require 'open-uri'
 
 # Load data and write to DB
 class DbWriter
-  RESOURCE_URL = 'https://sdw.ecb.europa.eu/quickviewexport.do?SERIES_KEY=120.EXR.D.USD.EUR.SP00.A&type=csv'.freeze
+  RESOURCE_URL = 'https://sdw.ecb.europa.eu/quickviewexport.do?SERIES_KEY=120.EXR.D.USD.EUR.SP00.A&type=csv'
 
-  def initialize
-    @database = DbAdapter.connect
-    @table    = DbAdapter.dataset
+  def initialize(table_name)
+    @table_name = table_name
+    @database   = DbAdapter.new
+    @table      = @database.get_table(@table_name)
   end
 
-  def check_table
-    table_exist? ? check_for_update : make_table
+  def table_processing
+    first_date = parsed_data.first[0]
+    write_to_db if @table.where(date: first_date).get(:date).nil?
+    @table
   end
 
   private
 
-  def table_exist?
-    @database.table_exists?(:rate)
-  end
-
-  def prepared_data
+  def parsed_data
     CSV.parse(open(RESOURCE_URL).drop(5).join)
   end
 
@@ -29,7 +28,7 @@ class DbWriter
     puts 'Database is updating... please wait'
     t1 = Time.now
     begin
-      prepared_data.map do |day, course|
+      parsed_data.map do |day, course|
         @table.insert(date: day, course: course) if course != '-'
       end
     rescue Sequel::UniqueConstraintViolation
@@ -38,19 +37,5 @@ class DbWriter
     t2 = Time.now
     puts "Recorded in #{(t2 - t1).round(3)} sec.",
          "Rows count: #{@table.count}"
-  end
-
-  def check_for_update
-    first_date = prepared_data.first[0] # => "\"2017-11-23\""
-    write_to_db if @table.where(date: first_date).get(:date).nil?
-  end
-
-  def make_table
-    @database.create_table :rate do
-      primary_key :id
-      Date :date, unique: true
-      Float :course
-    end
-    write_to_db
   end
 end

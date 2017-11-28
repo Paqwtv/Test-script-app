@@ -1,8 +1,7 @@
 require 'sequel'
 require 'spec_helper'
+require 'webmock/rspec'
 require './exchanger'
-
-DB = Sequel.sqlite
 
 RSpec.configure do |config|
   config.color = true
@@ -11,8 +10,5 @@ RSpec.configure do |config|
   end
   config.mock_with :rspec do |mocks|
     mocks.verify_partial_doubles = true
-  end
-  config.around(:each) do |example|
-    DB.transaction(rollback: :always, auto_savepoint: true) { example.run }
   end
 end
