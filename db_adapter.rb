@@ -14,8 +14,11 @@ class DbAdapter
   #   )
   # end
 
+  # Stored in RAM memory database, requires sqlite3
+  # fast and easy way but the database is not saved locally
+
   def initialize
-    @db = Sequel.sqlite('database.sqlite3')
+    @db = Sequel.sqlite
   end
 
   def get_table(table)

@@ -4,19 +4,9 @@ describe 'Processing exchange requests' do
   context 'for amount' do
     let(:query) { Exchanger.exchange(100, '2017-01-25') }
     let(:bad_query) { Exchanger.exchange('100', '2017-01-25') }
-    let(:negative_query) { Exchanger.exchange(-100, '2017-01-25') }
-    let(:zero_query) { Exchanger.exchange(0, '2017-01-25') }
 
     it 'should raise ArgumentError when amount wrong type' do
       expect { bad_query }.to raise_error(ArgumentError)
-    end
-
-    it 'should raise ArgumentError when amount negative' do
-      expect { negative_query }.to raise_error(ArgumentError)
-    end
-
-    it 'should raise ArgumentError when amount is zero' do
-      expect { zero_query }.to raise_error(ArgumentError)
     end
 
     it 'should return Float type value' do
@@ -36,8 +26,8 @@ describe 'Processing exchange requests' do
     let(:q_for_dates) { Exchanger.exchange(100, *dates) }
     let(:q_data_empty) { Exchanger.exchange(100, nil) }
 
-    it 'should return a text massage when they ask for a day off' do
-      expect(q_on_weekend).to eql(['Sorry, no data for 2017-01-01'])
+    it 'should return nil when they ask for a day off' do
+      expect(q_on_weekend).to eql([nil])
     end
 
     it 'should return a correct answer to the request of multiple dates' do
