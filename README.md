@@ -47,5 +47,5 @@ Require `exchanger.rb` to **irb** or your **Rails application**
   => [117.5379]
 
   Exchanger.exchange(110.23, Date.yesterday - 24, Date.today, '2017-01-25')
-  => [127.99908, "Sorry, no data for 2017-11-26", 118.42009]
+  => [nil, nil, 118.42009]
 ```
