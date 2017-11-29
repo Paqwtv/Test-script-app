@@ -8,8 +8,7 @@ class DbWriter
 
   def initialize(table_name)
     @table_name = table_name
-    @database   = DbAdapter.new
-    @table      = @database.get_table(@table_name)
+    @table      = DbAdapter.get_table(@table_name)
   end
 
   def table_processing

@@ -17,25 +17,21 @@ class DbAdapter
   # Stored in RAM memory database, requires sqlite3
   # fast and easy way but the database is not saved locally
 
-  def initialize
-    @db = Sequel.sqlite
-  end
+  @db = Sequel.sqlite(':memory:')
 
-  def get_table(table)
+  def self.get_table(table)
     table_exist?(table) ? cur_table(table) : make_table(table)
   end
 
-  private
-
-  def cur_table(table)
+  def self.cur_table(table)
     @db[table]
   end
 
-  def table_exist?(table)
+  def self.table_exist?(table)
     @db.table_exists?(table)
   end
 
-  def make_table(table)
+  def self.make_table(table)
     @db.create_table table do
       primary_key :id
       Date :date, unique: true
