@@ -1,10 +1,10 @@
 require 'sequel'
 require 'spec_helper'
-require 'webmock/rspec'
 require './exchanger'
 
 RSpec.configure do |config|
   config.color = true
+  config.formatter = :documentation
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end

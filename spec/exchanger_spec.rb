@@ -5,7 +5,7 @@ describe 'Processing exchange requests' do
     let(:query) { Exchanger.exchange(100, '2017-01-25') }
     let(:bad_query) { Exchanger.exchange('100', '2017-01-25') }
     let(:negative_query) { Exchanger.exchange(-100, '2017-01-25') }
-    let(:zero_query) { Exchanger.exchange(-100, '2017-01-25') }
+    let(:zero_query) { Exchanger.exchange(0, '2017-01-25') }
 
     it 'should raise ArgumentError when amount wrong type' do
       expect { bad_query }.to raise_error(ArgumentError)

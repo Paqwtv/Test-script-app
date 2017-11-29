@@ -5,21 +5,18 @@ class DbAdapter
   # A complete database that can stored in most relational databases
   # requires the creation of a database
 
-  def initialize
-    @db = Sequel.postgres(
-      host: 'localhost',
-      user: 'postgres_hurum',
-      password: 'password',
-      database: 'exchange'
-    )
-  end
-
-  # Stored in RAM memory database, requires sqlite3
-  # fast and easy way but the database is not saved locally
-
   # def initialize
-  #   @db = Sequel.sqlite
+  #   @db = Sequel.postgres(
+  #     host: 'localhost',
+  #     user: 'postgres_hurum',
+  #     password: 'password',
+  #     database: 'exchange'
+  #   )
   # end
+
+  def initialize
+    @db = Sequel.sqlite('database.sqlite3')
+  end
 
   def get_table(table)
     table_exist?(table) ? cur_table(table) : make_table(table)
